@@ -9,25 +9,20 @@ function App() {
 
   const addContact = () => {
     const newContactArr = [...contacts];
-    const randomContact = ContactData[Math.floor(Math.random() * (ContactData.length - contacts.length) + contacts.length)];
-    newContactArr.push(randomContact);
+    newContactArr.push(ContactData[Math.floor(Math.random() * (ContactData.length - contacts.length) + contacts.length)]);
     setContacts(newContactArr);
   }; 
 
   const sortPopu = () => {
-    const sortedPopu = [...contacts].sort((a,b) => b.popularity - a.popularity);
-    setContacts(sortedPopu);
+    setContacts(() => [...contacts].sort((a,b) => b.popularity - a.popularity));
   }
 
   const sortName = () => {
-    const sortedName = [...contacts].sort((a,b) => a.name.localeCompare(b.name));
-    setContacts(sortedName);
+    setContacts(() => [...contacts].sort((a,b) => a.name.localeCompare(b.name)));
   }
 
-
   const deleteContact = (index) => () =>
-  setContacts((contacts) => contacts.filter((_, i) => i !== index));
-
+  setContacts(() => contacts.filter((_, i) => i !== index));
 
   return (
     <div className="App">
@@ -48,7 +43,7 @@ function App() {
           <table key={elem.id}>
             <tl><img src={elem.pictureUrl} alt={elem.name} width="50 px"/></tl>
             <tl>{elem.name}</tl>
-            <tl>{elem.popularity}</tl>
+            <tl>{parseFloat(elem.popularity).toFixed(2)}</tl>
             {elem.wonOscar ? <tl>🏆</tl> : null}
             {elem.wonEmmy ? <tl>🏆</tl> : null}
             <tl><button onClick={deleteContact(index)}>Delete</button></tl>
